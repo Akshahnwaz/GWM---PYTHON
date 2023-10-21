@@ -1,0 +1,51 @@
+import os
+import datetime
+import time
+from tkinter import * 
+import sys
+
+digital_clock_window=Tk()
+digital_clock_window.title("DIGITAL CLOCK")
+digital_clock_window.minsize(width=700,height=400)
+digital_clock_window.maxsize()
+
+
+def get_time():
+    timevar = time.strftime("%H:%M:%S %p")
+    clock.config(text=timevar)
+    clock.after(200,get_time)
+
+
+def setting_alarm_time():
+    timing=alarm_time.get()
+    while True:
+        current_time = datetime.datetime.now().strftime('%H:%M:%S')
+        if current_time == timing:
+            os.startfile('D:\grow with code\Task1\Twirling-alarm-tone.mp3')
+            msg = Label(digital_clock_window,text="Time to wake up! ",font=("Calibri",20),bg="powderblue",fg="black")
+            msg.place(x=10,y=500)
+            break
+        time.sleep(1)
+
+
+
+
+f=Frame(digital_clock_window,bg="grey",borderwidth=6,relief=SUNKEN,pady=30)
+f.pack(fill="x")
+
+clock = Label(f,font=("Calibri",90),bg="powderblue",fg="black")
+clock.pack()
+
+
+alarm_timing = Label(digital_clock_window,text="Enter the alarm time (HH:MM:SS format): ",font=("Calibri",20),bg="powderblue",fg="black")
+alarm_timing.place(x=10,y=300)
+
+alarm_time=Entry(digital_clock_window,font=("Calibri",20),bd=5,width="10",bg="white")
+alarm_time.place(x=500,y=300)
+
+set_button=Button(digital_clock_window,text="SET ALARM",bg="green",font="helvetica 20 bold",fg="white",width="15",command=setting_alarm_time)
+set_button.place(x=80,y=400)
+
+get_time()
+
+digital_clock_window.mainloop()
