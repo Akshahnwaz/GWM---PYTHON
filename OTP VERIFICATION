@@ -1,0 +1,90 @@
+import random
+import string
+import tkinter as tk
+from tkinter import * 
+from tkinter import messagebox 
+
+# Send OTP via Email
+def send_otp_email(email, otp):
+    # Logic to send email with OTP
+    print(f"OTP sent to {email}: {otp}")
+
+# Send OTP via SMS
+def send_otp_sms(phone_number, otp):
+    # Logic to send SMS with OTP
+    print(f"OTP sent to {phone_number}: {otp}")
+
+# Verify OTP
+def verify_otp(user_otp, otp):
+    return user_otp == otp
+
+# Generate OTP
+def submit_otp():
+    characters = string.ascii_letters + string.digits
+    otp = ''.join(random.choice(characters) for _ in range(6))
+    messagebox.showinfo("Generated OTP",otp)
+    return otp
+
+otp=submit_otp()
+otp_window=Tk()
+otp_window.title("OTP VERIFIER")
+otp_window.minsize(width=1300,height=700)
+
+f=Frame(otp_window,bg="purple",borderwidth=6,relief=SUNKEN)
+f.pack(fill="x")
+li_label=Label(f,text="OTP VERIFIER",fg="white",font="helvetica 20 bold",bg="purple")
+li_label.pack()
+li_label=Label(f,text="Aksha Shahnwaz",fg="yellow",font="helvetica 15 bold underline",bg="purple")
+li_label.place(x=1300,y=10)
+
+def otp_verify():
+    
+    email=StringVar()
+    phone_number=StringVar()
+    user_otp=StringVar()
+
+    # Simulate sending OTP via Email
+    email = e_box.get()
+    send_otp_email(email, otp)
+
+    # Simulate sending OTP via SMS
+    phone_number = p_box.get()
+    send_otp_sms(phone_number, otp)    
+
+    # Verify OTP
+    user_otp=user_input.get()
+    if verify_otp(user_otp, otp):
+        messagebox.showinfo("Successful","VERIFICATION SUCCESFUL")
+    else:
+        messagebox.showwarning("Caution","INVALID OTP!!!")
+
+f1=Frame(otp_window,bg="plum",borderwidth=6,relief=SUNKEN)
+f1.pack(pady=30)
+
+uinfobox_label=Label(f1,bg="plum",width="20")
+uinfobox_label.place(x=40,y=80)
+uinfobox_label.pack(padx=350,pady=250)
+
+e_label=Label(f1,text="E-MAIL",font="helvetica 20 bold",bg="plum")
+e_label.place(x=20,y=60)
+e_box=Entry(f1,font=18,bd=8,width="40")
+e_box.place(x=20,y=100)
+
+e_label=Label(f1,text="PHONE NUMBER",font="helvetica 20 bold",bg="plum")
+e_label.place(x=20,y=150)
+p_box=Entry(f1,font=18,bd=8,width="40")
+p_box.place(x=20,y=190)
+
+submit_btn=Button(otp_window,text="SUBMIT",font="helvetica 20 bold",fg="white",bg="purple",command=submit_otp)
+submit_btn.place(x=500,y=330)
+
+# Prompt user to enter OTP
+user_label=Label(f1,text="Enter otp sent to your e-mail/phone",font="helvetica 20 bold",bg="plum")
+user_label.place(x=20,y=310)
+user_input=Entry(f1,font=18,bd=8,width="40")
+user_input.place(x=20,y=350)
+
+verify_btn=Button(otp_window,text="Verify OTP",font="helvetica 20 bold",fg="white",bg="purple",command=otp_verify)
+verify_btn.place(x=500,y=500)
+
+otp_window.mainloop()
