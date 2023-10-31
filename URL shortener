@@ -1,0 +1,63 @@
+import tkinter as tk
+import requests
+import pyperclip
+from tkinter import * 
+
+# Function to shorten the URL using TinyURL API
+def shorten_url():
+    original_url = entry_url.get()
+    if original_url:
+        response = requests.get(f"http://tinyurl.com/api-create.php?url={original_url}")
+        if response.status_code == 200:
+            shortened_url = response.text
+            label_result.config(text=f"Shortened URL: {shortened_url}")
+            pyperclip.copy(shortened_url)  # Copy to clipboard
+        else:
+            label_result.config(text="Error: Unable to shorten the URL")
+    else:
+        label_result.config(text="Error: Please enter a URL")
+
+# Create the main application window
+app =Tk()
+app.title("URL Shortener")
+app.geometry("1550x800+0+0")
+
+#Create heading frame
+heading_frame=Frame(app,bg="teal",borderwidth=6,relief=SUNKEN)
+heading_frame.pack(fill="x")
+head_label=Label(heading_frame,text="URL SHORTENER",fg="white",font="helvetica 23 bold",bg="teal")
+head_label.pack()
+heading_label =Label(heading_frame, text="AKSHA SHAHNWAZ",font="helvetica 15 bold underline",bg="teal",fg="yellow")
+heading_label.pack(side=RIGHT)
+
+# Create a frame for the URL input
+input_frame= Frame(app,borderwidth=8,bg="turquoise",relief=SUNKEN)
+input_frame.pack(pady=50)
+frame_label=Label(input_frame,bg="turquoise",width="20")
+frame_label.pack(padx=350,pady=70)
+
+
+# Create a label for the URL input
+label_url =Label(input_frame, text="Enter URL:",bg="turquoise",font="helvetica 20 bold")
+label_url.place(x=20,y=30)
+# Create an entry field for the URL
+entry_url = Entry(input_frame, width="60",font="helvetica 15")
+entry_url.place(x=20,y=70)
+
+# Create a button to shorten the URL
+shorten_button =Button(input_frame, text="URL SHORTENER",font="helvetica 20 bold",bg="teal",fg="white", command=shorten_url)
+shorten_button.pack(side=RIGHT)
+
+# Create a frame to display the result
+output_frame= Frame(app,borderwidth=8,bg="turquoise",relief=SUNKEN)
+output_frame.pack(pady=50)
+output_framebox_label=Label(output_frame,bg="turquoise",width="20")
+output_framebox_label.place(x=40,y=80)
+output_framebox_label.pack(padx=350,pady=50)
+
+# Create a label to display the result
+label_result = Label(output_frame,bg="turquoise",font="helvetica 20 bold", text="")
+label_result.place(x=20,y=30)
+
+# Run the GUI application
+app.mainloop()
